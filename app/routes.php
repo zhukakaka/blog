@@ -47,3 +47,4 @@ Route::get('home', array('before' => 'auth', function()
 {
     return View::make('home');
 }));
+
