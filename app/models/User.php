@@ -9,4 +9,5 @@ class User extends Eloquent implements UserInterface {
     protected $table = 'users';
     protected $hidden = array('password', 'remember_token');
     protected $guard = array('email', 'password');
+    protected $fillable = ['email'];
 }
