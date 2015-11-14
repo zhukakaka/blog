@@ -15,6 +15,10 @@ Route::get('/', function()
 {
     return View::make('index');
 });
+
+
+
+
 Route::get('login', function()
 {
     return View::make('login');
@@ -34,6 +38,7 @@ Route::post('login', array('before' => 'csrf', function()
             'password' => Input::get('password'),
             'block'    => 0), (boolean) Input::get('remember_me')))
         {
+            // var_dump(Input::get());exit;
             return Redirect::intended('home');
         } else {
             return Redirect::to('login')->withInput()->with('message', array('type' => 'danger', 'content' => 'E-mail or password error'));
