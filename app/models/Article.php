@@ -1,8 +1,6 @@
 <?php
 
-class Article extends \Eloquent {
-	protected $fillable = [];
-}
+
 use Illuminate\Database\Eloquent\SoftDeletingTrait;
 
 class Article extends \Eloquent {
