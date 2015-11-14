@@ -180,4 +180,5 @@ Route::group(array('before' => 'auth|csrf|isAdmin'), function()
         return Redirect::to('admin/users')->with('message', array('type' => 'success', 'content' => 'Unlock user successfully'));
     });
 });
+Route::post('article/preview', array('before' => 'auth', 'uses' => 'ArticleController@preview'));
 Route::resource('article', 'ArticleController');

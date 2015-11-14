@@ -86,5 +86,9 @@ class ArticleController extends \BaseController {
 	{
 		//
 	}
+	public function preview() 
+	{
+    return Markdown::parse(Input::get('content'));
+	}
 
 }
