@@ -13,7 +13,9 @@
 
 Route::get('/', function()
 {
-    return View::make('index');
+    $articles = Article::with('user', 'tags')->orderBy('created_at', 'desc')->paginate(10);
+    $tags = Tag::where('count', '>', '0')->orderBy('count', 'desc')->orderBy('updated_at', 'desc')->take(10)->get();
+    return View::make('index')->with('articles', $articles)->with('tags', $tags);
 });
 
 
