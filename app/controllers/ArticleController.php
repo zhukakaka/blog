@@ -160,7 +160,14 @@ class ArticleController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+    	$article = Article::find($id);
+    foreach ($article->tags as $tag) {
+        $tag->count--;
+        $tag->save();
+        $article->tags()->detach($tag->id);
+    }
+    	$article->delete();
+    return Redirect::to('home');
 	}
 	public function preview() 
 	{
@@ -173,5 +180,6 @@ class ArticleController extends \BaseController {
         return Redirect::to('/');
     }
 	}
+
 
 }
