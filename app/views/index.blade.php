@@ -9,7 +9,7 @@
           <a href="{{ URL::route('article.show', $article->id) }}">{{{ $article->title }}}</a>
         </h3>
         <h4 class="am-article-meta blog-meta">
-            by <a href="#">{{{ $article->user->nickname }}}</a> posted on {{ $article->created_at->format('Y/m/d H:i') }} under 
+            by <a href="{{ URL::to('user/' . $article->user->id . '/articles') }}">{{{ $article->user->nickname }}}</a> posted on {{ $article->created_at->format('Y/m/d H:i') }} under 
             @foreach ($article->tags as $tag)
         <a href="#" style="color: #fff;" class="am-badge am-badge-success am-radius">{{ $tag->name }}</a>
             @endforeach
@@ -52,4 +52,5 @@
     </div>
   </div>
 </div>
+{{ $articles->links() }}
 @stop

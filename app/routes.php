@@ -52,7 +52,7 @@ Route::post('login', array('before' => 'csrf', function()
 
 Route::get('home', array('before' => 'auth', function()
 {
-    return View::make('home');
+    return View::make('home')->with('user', Auth::user())->with('articles', Article::with('tags')->where('user_id', '=', Auth::id())->orderBy('created_at', 'desc')->get());
 }));
 Route::get('logout', array('before' => 'auth', function()
 {
@@ -184,3 +184,4 @@ Route::group(array('before' => 'auth|csrf|isAdmin'), function()
 });
 Route::post('article/preview', array('before' => 'auth', 'uses' => 'ArticleController@preview'));
 Route::resource('article', 'ArticleController');
+Route::get('user/{user}/articles', 'UserController@articles');
