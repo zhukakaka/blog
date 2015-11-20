@@ -185,3 +185,4 @@ Route::group(array('before' => 'auth|csrf|isAdmin'), function()
 Route::post('article/preview', array('before' => 'auth', 'uses' => 'ArticleController@preview'));
 Route::resource('article', 'ArticleController');
 Route::get('user/{user}/articles', 'UserController@articles');
+Route::post('article/{id}/preview', array('before' => 'auth', 'uses' => 'ArticleController@preview'));

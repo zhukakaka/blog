@@ -22,6 +22,8 @@ class ArticleController extends \BaseController {
 	public function __construct()
 	{
 	    $this->beforeFilter('auth', array('only' => array('create', 'store', 'edit', 'update', 'destroy')));
+	    $this->beforeFilter('csrf', array('only' => array('store', 'update', 'destroy')));
+		$this->beforeFilter('@canOperation', array('only' => array('edit', 'update', 'destroy')));
 	}
 
 	public function create()
@@ -86,7 +88,13 @@ class ArticleController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		//
+	    $article = Article::with('tags')->find($id);
+	    $tags = '';
+    for ($i = 0, $len = count($article->tags); $i < $len; $i++) {
+	        $tags .= $article->tags[$i]->name . ($i == $len - 1 ? '' : ',');
+	    }
+	    $article->tags = $tags;
+    return View::make('articles.edit')->with('article', $article);
 	}
 
 	/**
@@ -115,6 +123,13 @@ class ArticleController extends \BaseController {
 	public function preview() 
 	{
     return Markdown::parse(Input::get('content'));
+	}
+	public function canOperation($route, $request)
+	{
+    if (!(Auth::user()->is_admin or Auth::id() == Article::find(Route::input('article'))->user_id))
+    {
+        return Redirect::to('/');
+    }
 	}
 
 }
